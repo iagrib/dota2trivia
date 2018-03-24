@@ -248,7 +248,9 @@ const data = {
 		["Dagon (level 3)", 25],
 		["Dagon (level 4)", 20],
 		["Dagon (level 5)", 15],
-		["Infused Raindrops", 7]
+		["Infused Raindrops", 7],
+		["Manta Style", 30, "on melee heroes"],
+		["Manta Style", 45, "on ranged heroes"]
 	],
 	amana: [
 		["Blink", 60],
