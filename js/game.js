@@ -67,8 +67,9 @@ function nextQuestion() {
 		case "invoke":
 			const t = Math.random() < 0.5;
 			cq[0] = t ? `What combination is used to invoke ${item[0]}?` : `What spell is invoked by this combination: ${item[1]}?`;
-			cq[1] = item[+t];
-			cq[2] = gSettings.hardmode.val || getitems(cat, +t, item[1]);
+			const i = +t;
+			cq[1] = item[i];
+			cq[2] = gSettings.hardmode.val || getitems(cat, i, item[i]);
 			cq[3] = `assets/abilities/${t ? item[0] : "Invoke"}.jpg`;;
 			break;
 
