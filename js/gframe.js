@@ -10,7 +10,7 @@ const stats = [["Score: ", "#6a6"], ["Misses: ", "#a66"], ["Timer: ", "#66a"]].m
 	const newEl = statframe.appendChild(el(d[0]));
 	newEl.style.borderRadius = "2px";
 	newEl.style.margin = "3px";
-	newEl.style.flexGrow = 1;
+	newEl.style.flex = 1;
 	newEl.style.background = d[1];
 	return newEl.appendChild(el("0", "b"));
 });
