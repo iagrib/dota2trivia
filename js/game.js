@@ -69,7 +69,7 @@ function nextQuestion() {
 			cq[0] = t ? `What combination is used to invoke ${item[0]}?` : `What spell is invoked by this combination: ${item[1]}?`;
 			cq[1] = item[+t];
 			cq[2] = gSettings.hardmode.val || getitems(cat, +t, item[1]);
-			cq[3] = `assets/abilities/${t ? item[0] : "invoke"}.jpg`;;
+			cq[3] = `assets/abilities/${t ? item[0] : "Invoke"}.jpg`;;
 			break;
 
 
