@@ -24,6 +24,10 @@ document.body.style.color = "#bef";
 const font = document.body.appendChild(el(null, "link"));
 font.href = "https://fonts.googleapis.com/css?family=IBM+Plex+Serif";
 font.rel = "stylesheet";
+const icon = document.body.appendChild(el(null, "link"));
+icon.href = "favicon.ico";
+icon.rel = "icon";
+icon.type = "image/x-icon";
 
 const main = document.body.appendChild(el());
 main.style.background = "rgba(50, 50, 100, 0.8)";
@@ -35,7 +39,7 @@ const title = main.appendChild(el("Dota 2 Trivia"));
 title.style.fontSize = "36px";
 title.style.margin = "10px";
 
-const footer = document.body.appendChild(el("GitHub link", "a"));
+const footer = document.body.appendChild(el("GitHub", "a"));
 footer.href = "https://github.com/iagrib/dota2trivia";
 footer.style.fontSize = "10px";
 footer.style.color = "#bef";
@@ -44,4 +48,4 @@ footer.style.color = "#bef";
 
 load("game");
 
-console.log("%cJust a reminder: cheating is not fun! 😉", "color: blue");
+console.log("%cJust a reminder: cheating is not fun! 😉", "color: #090");
