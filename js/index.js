@@ -21,10 +21,10 @@ document.body.style.background = `center/cover url("assets/bg/${Math.floor(Math.
 document.body.style.fontFamily = "'IBM Plex Serif', serif";
 document.body.style.textAlign = "center";
 document.body.style.color = "#bef";
-const font = document.body.appendChild(el(null, "link"));
+const font = document.head.appendChild(el(null, "link"));
 font.href = "https://fonts.googleapis.com/css?family=IBM+Plex+Serif";
 font.rel = "stylesheet";
-const icon = document.body.appendChild(el(null, "link"));
+const icon = document.head.appendChild(el(null, "link"));
 icon.href = "favicon.ico";
 icon.rel = "icon";
 icon.type = "image/x-icon";
