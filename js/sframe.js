@@ -74,7 +74,7 @@ for(const val of Object.values(gSettings)) {
 				if(Number.isInteger(nval) && nval >= 0 && nval < 100) {
 					val.val = nval;
 
-					const col = `#${nval ? "bef" : "666"}`
+					const col = nval ? "#bef" : "#666";
 					input.style.color = col;
 					input.style.border = `1px solid ${col}`;
 					return;

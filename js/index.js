@@ -1,6 +1,8 @@
-﻿function load(name) {
+﻿const cv = document.currentScript.src.match(/\d+/)[0];
+
+function load(name) {
 	const script = document.body.appendChild(document.createElement("script"));
-	script.src = `js/${name}.js`;
+	script.src = `js/${name}.js?${cv}`;
 	return new Promise(r => script.onload = () => {
 		script.remove();
 		r();
@@ -39,10 +41,12 @@ const title = main.appendChild(el("Dota 2 Trivia"));
 title.style.fontSize = "36px";
 title.style.margin = "10px";
 
-const footer = document.body.appendChild(el("GitHub", "a"));
-footer.href = "https://github.com/iagrib/dota2trivia";
+const footer = document.body.appendChild(el("Last updated for gameplay patch 7.12 | "));
 footer.style.fontSize = "10px";
 footer.style.color = "#bef";
+const gh = footer.appendChild(el("GitHub", "a"));
+gh.href = "https://github.com/iagrib/dota2trivia";
+gh.style.color = "#bef";
 
 
 
