@@ -1,23 +1,14 @@
-let err;
-let button;
-
-let gScore;
-let gMisses;
-let gTimer;
-let gAnswer;
-
-let interval;
-let answered;
+const game = {};
 
 function nextQuestion() {
-	for(const btn of answers) btn.style.border = "2px solid #33a";
+	for(const btn of gframe.answers) btn.style.border = "2px solid #33a";
 
-	const cat = gSettings.questions[Math.floor(Math.random() * gSettings.questions.length)];
-	answered[cat] = answered[cat] && answered[cat].n++ < data[cat].length ? answered[cat] : {n: 1};
+	const cat = settings.questions[Math.floor(Math.random() * settings.questions.length)];
+	game.answered[cat] = game.answered[cat] && game.answered[cat].n++ < data[cat].length ? game.answered[cat] : {n: 1};
 
 	let i;
-	while((i = Math.floor(Math.random() * data[cat].length)) in answered[cat]);
-	answered[cat][i] = true;
+	while((i = Math.floor(Math.random() * data[cat].length)) in game.answered[cat]);
+	game.answered[cat][i] = true;
 
 	const item = data[cat][i];
 	const cq = [];
@@ -25,42 +16,42 @@ function nextQuestion() {
 		case "imana":
 			cq[0] = `What is the mana cost of ${item[0]}?${item[2] ? ` (${item[2]})` : ""}`;
 			cq[1] = item[1];
-			cq[2] = gSettings.hardmode.val || getitems(cat, 1, item[1], 40, 100);
+			cq[2] = settings.hardmode.val || getitems(cat, 1, item[1], 40, 100);
 			cq[3] = `assets/items/${item[0]}.jpg`;
 			break;
 
 		case "icost":
 			cq[0] = `How much does ${item[0]} cost?`;
 			cq[1] = item[1];
-			cq[2] = gSettings.hardmode.val || getitems(cat, 1, item[1], 100, 500);
+			cq[2] = settings.hardmode.val || getitems(cat, 1, item[1], 100, 500);
 			cq[3] = `assets/items/${item[0]}.jpg`;
 			break;
 
 		case "icd":
 			cq[0] = `What is the cooldown of ${item[0]}?`;
 			cq[1] = item[1];
-			cq[2] = gSettings.hardmode.val || getitems(cat, 1, item[1], 10, 30);
+			cq[2] = settings.hardmode.val || getitems(cat, 1, item[1], 10, 30);
 			cq[3] = `assets/items/${item[0]}.jpg`;
 			break;
 
 		case "amana":
 			cq[0] = `What is the mana cost of ${item[0]}?`;
 			cq[1] = item[1];
-			cq[2] = gSettings.hardmode.val || getitems(cat, 1, item[1], typeof item[1] === "number" && 50, 100);
+			cq[2] = settings.hardmode.val || getitems(cat, 1, item[1], typeof item[1] === "number" && 50, 100);
 			cq[3] = `assets/abilities/${item[0]}.jpg`;
 			break;
 
 		case "acd":
 			cq[0] = `What is the cooldown of ${item[0]}?`;
 			cq[1] = item[1];
-			cq[2] = gSettings.hardmode.val || getitems(cat, 1, item[1], typeof item[1] === "number" && 15, 10);
+			cq[2] = settings.hardmode.val || getitems(cat, 1, item[1], typeof item[1] === "number" && 15, 10);
 			cq[3] = `assets/abilities/${item[0]}.jpg`;
 			break;
 
 		case "ahero":
 			cq[0] = `What hero has this ability: ${item[0]}?`;
 			cq[1] = item[1];
-			cq[2] = gSettings.hardmode.val || getitems(cat, 1, item[1])
+			cq[2] = settings.hardmode.val || getitems(cat, 1, item[1])
 			cq[3] = `assets/abilities/${item[0]}.jpg`;
 			break;
 
@@ -69,7 +60,7 @@ function nextQuestion() {
 			cq[0] = t ? `What combination is used to invoke ${item[0]}?` : `What spell is invoked by this combination: ${item[1]}?`;
 			const i = +t;
 			cq[1] = item[i];
-			cq[2] = gSettings.hardmode.val || getitems(cat, i, item[i]);
+			cq[2] = settings.hardmode.val || getitems(cat, i, item[i]);
 			cq[3] = `assets/abilities/${t ? item[0] : "Invoke"}.jpg`;;
 			break;
 
@@ -78,46 +69,46 @@ function nextQuestion() {
 			// 🤔
 	}
 
-	question.textContent = cq[0];
-	img.src = cq[3];
-	if(gSettings.hardmode.val) gAnswer = cq[1].toString();
+	gframe.question.textContent = cq[0];
+	gframe.img.src = cq[3];
+	if(settings.hardmode.val) game.answer = cq[1].toString();
 	else {
 		const rand = Math.floor(Math.random() * 4);
-		answers[rand].val.textContent = cq[1];
-		gAnswer = rand;
-		for(let a = 0, q = 0; a < 4; a++) a === rand || (answers[a].val.textContent = cq[2][q++]);
-		answers.forEach((v, i) => v.onclick = answer.bind(null, i));
+		gframe.answers[rand].val.textContent = cq[1];
+		game.answer = rand;
+		for(let a = 0, q = 0; a < 4; a++) a === rand || (gframe.answers[a].val.textContent = cq[2][q++]);
+		gframe.answers.forEach((v, i) => v.onclick = answer.bind(null, i));
 	}
 
-	if(gSettings.timer.val) {
-		stats[2].textContent = gTimer = gSettings.timer.val;
-		interval = setInterval(() => (stats[2].textContent = --gTimer) || answer(), 1000);
+	if(settings.timer.val) {
+		gframe.stats[2].textContent = game.timer = settings.timer.val;
+		game.iid = setInterval(() => (gframe.stats[2].textContent = --game.timer) || answer(), 1000);
 	}
 }
 
 function answer(answ) {
-	clearInterval(interval);
+	clearInterval(game.iid);
 
-	for(const btn of answers) btn.onclick = null;
+	for(const btn of gframe.answers) btn.onclick = null;
 
-	if(gSettings.hardmode.val) {
+	if(settings.hardmode.val) {
 		// tbd
 	} else {
-		if(answ !== undefined) answers[answ].style.border = "2px solid #a00";
-		answers[gAnswer].style.border = "2px solid #0a0";
+		if(answ !== undefined) gframe.answers[answ].style.border = "2px solid #a00";
+		gframe.answers[game.answer].style.border = "2px solid #0a0";
 	}
-	if(answ === gAnswer) stats[0].textContent = gScore += 100 - (Math.floor((gSettings.timer.val - gTimer) * 50 / gSettings.timer.val) || 0);
-	else stats[1].textContent = ++gMisses;
+	if(answ === game.answer) gframe.stats[0].textContent = game.score += 100 - (Math.floor((settings.timer.val - game.timer) * 50 / settings.timer.val) || 0);
+	else gframe.stats[1].textContent = ++game.misses;
 
-	if(gSettings.miss.val && gMisses === gSettings.miss.val) {
-		question.textContent = "Game over!";
-		button.style.display = "inline-block";
-		button.textContent = "Play again";
-		button.onclick = () => {
+	if(settings.miss.val && game.misses === settings.miss.val) {
+		gframe.question.textContent = "Game over!";
+		main.playb.style.display = "inline-block";
+		main.playb.textContent = "Play again";
+		main.playb.onclick = () => {
 			sframe.style.display = "block";
 			gframe.style.display = "none";
-			button.textContent = "Let's play!";
-			button.onclick = startGame;
+			main.playb.textContent = "Let's play!";
+			main.playb.onclick = startGame;
 		};
 		return;
 	}
@@ -126,20 +117,20 @@ function answer(answ) {
 }
 
 function startGame() {
-	gSettings.questions = Object.keys(gQuestions).filter(v => gQuestions[v]);
-	if(!gSettings.questions.length) {
-		err.style.display = "block";
-		err.val.textContent = "At least one category of questions must be selected.";
+	settings.questions = Object.keys(questions).filter(v => questions[v]);
+	if(!settings.questions.length) {
+		main.err.style.display = "block";
+		main.err.val.textContent = "At least one category of questions must be selected.";
 		return;
 	}
 
-	stats[0].textContent = gScore = 0;
-	stats[1].textContent = gMisses = 0;
-	stats[2].textContent = "-";
+	gframe.stats[0].textContent = game.score = 0;
+	gframe.stats[1].textContent = game.misses = 0;
+	gframe.stats[2].textContent = "-";
 
-	answered = {};
+	game.answered = {};
 
-	button.style.display = "none";
+	main.playb.style.display = "none";
 	sframe.style.display = "none";
 	gframe.style.display = "block";
 
@@ -149,20 +140,20 @@ function startGame() {
 Promise.all([load("sframe"), load("gframe"), load("data")]).then(() => {
 	gframe.style.display = "none";
 
-	err = main.appendChild(el());
-	err.style.color = "#f66";
-	err.style.marginTop = "15px";
-	err.val = err.appendChild(el(null, "b"));
-	err.appendChild(el(" (click to hide)", "i"));
-	(err.onclick = () => err.style.display = "none")();
+	main.err = main.appendChild(el());
+	main.err.style.color = "#f66";
+	main.err.style.marginTop = "15px";
+	main.err.val = main.err.appendChild(el(null, "b"));
+	main.err.appendChild(el(" (click to hide)", "i"));
+	(main.err.onclick = () => main.err.style.display = "none")();
 
-	button = main.appendChild(el("Let's Play!", "button"));
-	button.style.fontSize = "20px";
-	button.style.fontFamily = "'IBM Plex Serif', serif";
-	button.style.color = "#bef";
-	button.style.background = "#323264";
-	button.style.border = "1px solid #bef";
-	button.style.borderRadius = "3px";
-	button.style.margin = "15px";
-	button.onclick = startGame;
+	main.playb = main.appendChild(el("Let's Play!", "button"));
+	main.playb.style.fontSize = "20px";
+	main.playb.style.fontFamily = "'IBM Plex Serif', serif";
+	main.playb.style.color = "#bef";
+	main.playb.style.background = "#323264";
+	main.playb.style.border = "1px solid #bef";
+	main.playb.style.borderRadius = "3px";
+	main.playb.style.margin = "15px";
+	main.playb.onclick = startGame;
 });

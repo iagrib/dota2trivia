@@ -1,4 +1,4 @@
-const gQuestions = {
+const questions = {
 	imana: "Items - Mana Cost",
 	icost: "Items - Gold Cost",
 	icd: "Items - Cooldown",
@@ -10,7 +10,7 @@ const gQuestions = {
 	//tmissing: "Missing Talents in Talent Trees",
 	invoke: "Invoker Spells"
 };
-const gSettings = {
+const settings = {
 	hardmode: {
 		type: "bool",
 		title: "Hard Mode",
@@ -38,17 +38,17 @@ const sframe = main.appendChild(el());
 sframe.appendChild(el("Game Settings")).style.fontSize = "24px";
 
 sframe.appendChild(el("Question types", "b")).style.fontSize = "20px";
-for(const [k, v] of Object.entries(gQuestions)) {
+for(const [k, v] of Object.entries(questions)) {
 	const newEl = sframe.appendChild(el(v));
 	const cb = newEl.appendChild(el(null, "input"));
 	cb.type = "checkbox";
 	cb.checked = true;
-	cb.onchange = () => gQuestions[k] = cb.checked;
+	cb.onchange = () => questions[k] = cb.checked;
 }
 
 sframe.appendChild(el("General", "b")).style.fontSize = "20px";
 
-for(const val of Object.values(gSettings)) {
+for(const val of Object.values(settings)) {
 	const opt = sframe.appendChild(el(`${val.title} `));
 	opt.appendChild(el("(?)", "abbr")).title = val.desc;
 
