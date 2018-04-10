@@ -23,15 +23,6 @@ document.body.style.background = `center/cover url("assets/bg/${Math.floor(Math.
 document.body.style.fontFamily = "'IBM Plex Serif', serif";
 document.body.style.textAlign = "center";
 document.body.style.color = "#bef";
-{
-	const font = document.head.appendChild(el(null, "link"));
-	font.href = "https://fonts.googleapis.com/css?family=IBM+Plex+Serif";
-	font.rel = "stylesheet";
-	const icon = document.head.appendChild(el(null, "link"));
-	icon.href = "favicon.ico";
-	icon.rel = "icon";
-	icon.type = "image/x-icon";
-}
 
 const main = document.body.appendChild(el());
 main.style.background = "rgba(50, 50, 100, 0.8)";
@@ -40,6 +31,14 @@ main.style.maxWidth = "800px";
 main.style.margin = "auto";
 
 {
+	const font = document.head.appendChild(el(null, "link"));
+	font.href = "https://fonts.googleapis.com/css?family=IBM+Plex+Serif";
+	font.rel = "stylesheet";
+	const icon = document.head.appendChild(el(null, "link"));
+	icon.href = "favicon.ico";
+	icon.rel = "icon";
+	icon.type = "image/x-icon";
+
 	const title = main.appendChild(el("Dota 2 Trivia"));
 	title.style.fontSize = "36px";
 	title.style.margin = "10px";
