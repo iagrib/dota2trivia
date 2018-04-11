@@ -61,13 +61,15 @@ for(const val of Object.values(settings)) {
 			break;
 
 		case "int":
-			input.style.width = "20px";
-			input.style.marginLeft = "3px";
-			input.style.fontFamily = "'IBM Plex Serif', serif";
-			input.style.color = "#bef";
-			input.style.background = "#323264";
-			input.style.border = "1px solid #bef";
-			input.style.borderRadius = "3px";
+			Object.assign(input.style, {
+				width: "20px",
+				marginLeft: "3px",
+				fontFamily: "'IBM Plex Serif', serif",
+				color: "#bef",
+				background: "#323264",
+				border: "1px solid #bef",
+				borderRadius: "3px"
+			});
 			input.value = val.val;
 			input.onchange = () => {
 				const nval = +input.value;

@@ -1,8 +1,8 @@
-﻿const cv = document.currentScript.src.match(/\d+/)[0];
+﻿const cv = document.currentScript.src.match(/\?\d+/)[0];
 
 function load(name) {
 	const script = document.body.appendChild(document.createElement("script"));
-	script.src = `js/${name}.js?${cv}`;
+	script.src = `js/${name}.js${cv}`;
 	return new Promise(r => script.onload = () => {
 		script.remove();
 		r();
@@ -19,16 +19,20 @@ function el(content = "", type = "div") {
 
 document.title = "Dota 2 Trivia";
 document.getElementsByTagName("html")[0].style.minHeight = "100vh";
-document.body.style.background = `center/cover url("assets/bg/${Math.floor(Math.random() * 39)}.jpg")`;
-document.body.style.fontFamily = "'IBM Plex Serif', serif";
-document.body.style.textAlign = "center";
-document.body.style.color = "#bef";
+Object.assign(document.body.style, {
+	background: `center/cover url("assets/bg/${Math.floor(Math.random() * 39)}.jpg")`,
+	fontFamily: "'IBM Plex Serif', serif",
+	textAlign: "center",
+	color: "#bef"
+});
 
 const main = document.body.appendChild(el());
-main.style.background = "rgba(50, 50, 100, 0.8)";
-main.style.borderRadius = "5px";
-main.style.maxWidth = "800px";
-main.style.margin = "auto";
+Object.assign(main.style, {
+	background: "rgba(50, 50, 100, 0.8)",
+	borderRadius: "5px",
+	maxWidth: "800px",
+	margin: "auto"
+});
 
 {
 	const font = document.head.appendChild(el(null, "link"));
